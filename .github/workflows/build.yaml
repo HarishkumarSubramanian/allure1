@@ -7,7 +7,8 @@ on:
   push:
     branches:
       - 'master'
-
+permissions:
+  contents: write
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -35,7 +36,12 @@ jobs:
           keep_reports: 20
       - name: Publish Report
         if: always()
-        uses: peaceiris/actions-gh-pages@v2
+        uses: HarishkumarSubramanian/actions-gh-pages@main
+        
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
         env:
           PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
